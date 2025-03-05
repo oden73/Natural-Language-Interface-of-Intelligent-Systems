@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Word {
+    + position_in_text: int
+    + lexeme: str
+    + basis: str
+    + part_of_speech: str
+    + ending: str
+    + case: str
+    + gender: str
+    + number: str
+    + Word(position_in_text, lexeme, basis, part_of_speech, ending, case, gender, number)
+}
+
+class FileController {
+    - file_name
+    + FileController(file_name: str)
+    + str file_format_definition()
+    + list[Word] words_list_generation()
+}
+
+
+@enduml
