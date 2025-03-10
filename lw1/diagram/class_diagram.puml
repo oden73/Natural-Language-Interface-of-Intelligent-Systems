@@ -18,6 +18,8 @@ class GeneralController {
     - file_controller: FileController
     - format_controller: FormatController
     - morphology_controller: MorphologyController
+    - word_form_generation_controller: WordFormGenerationController
+    + GeneralController()
     + list[Word] word_list_generation()
 }
 
@@ -29,33 +31,70 @@ class FileController {
 
 abstract class FormatController {
     - file_name: str
+    + FormatController(file_name: str)
     + list[str] file_parse()
 }
 
 class DOCController {
     - file_name: str
+    + DOCController(file_name: str)
     + list[str] file_parse()
 }
 
 class DOCXController {
     - file_name: str
+    + DOCXController(file_name: str)
     + list[str] file_parse()
 }
 
 class MorphologyController {
     - word_list: list[str]
+    + MorphologyController(word_list: list[str])
     - void word_list_sort()
     + list[Word] word_objects_creation()
 }
 
 class SaveController {
     - save_path: str
+    + SaveController(save_path: str)
     - file form_file(list[Word])
     + void save_file()
+}
+
+class WordFormGenerationController {
+    - word_form: str
+    - basis: str
+    - number: str
+    + WordFormGenerationController(word_form: str, basis: str, number: str)
+    + str word_form_generation()
 }
 
 class MainWindow {
 
 }
+
+class AboutProgramWindow {
+    
+}
+
+class WordFormGenerationWindow {
+
+}
+
+GeneralController ---> Word
+GeneralController ---* FileController
+GeneralController ---* FormatController
+GeneralController ---* MorphologyController
+GeneralController ---* SaveController
+GeneralController ---* WordFormGenerationController
+
+FormatController ---|> DOCController
+FormatController ---|> DOCXController
+
+MorphologyController ---> Word
+
+SaveController ---> Word
+
+WordFormGenerationController ---> Word
 
 @enduml
