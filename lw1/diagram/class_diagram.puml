@@ -2,7 +2,9 @@
 'https://plantuml.com/class-diagram
 
 class Word {
-    + position_in_text: int
+    + start_pos: int
+    + stop_pos: int
+    + word: str
     + lexeme: str
     + basis: str
     + part_of_speech: str
@@ -10,7 +12,14 @@ class Word {
     + case: str
     + gender: str
     + number: str
-    + Word(position_in_text, lexeme, basis, part_of_speech, ending, case, gender, number)
+    + Word(start_pos: int, stop_pos: int, word: str, lexeme: str, basis: str, part_of_speech: str, ending: str, case: str, gender: str, number: str)
+}
+
+class ReplaceHelper {
+    + part_of_speech_dict: dict
+    + case_dict: dict
+    + number_dict: dict
+    + gender_dict: dict
 }
 
 class GeneralController {
@@ -18,9 +27,10 @@ class GeneralController {
     - file_controller: FileController
     - format_controller: FormatController
     - morphology_controller: MorphologyController
+    - save_controller: SaveController
     - word_form_generation_controller: WordFormGenerationController
     + GeneralController()
-    + list[Word] word_list_generation()
+    + list[Word] word_list_generation(text_file_name: str)
 }
 
 class FileController {
@@ -32,25 +42,30 @@ class FileController {
 abstract class FormatController {
     - file_name: str
     + FormatController(file_name: str)
-    + list[str] file_parse()
+    + str file_parse()
 }
 
 class DOCController {
     - file_name: str
     + DOCController(file_name: str)
-    + list[str] file_parse()
+    + str file_parse()
 }
 
 class DOCXController {
     - file_name: str
     + DOCXController(file_name: str)
-    + list[str] file_parse()
+    + str file_parse()
 }
 
 class MorphologyController {
-    - word_list: list[str]
-    + MorphologyController(word_list: list[str])
-    - void word_list_sort()
+    - text: str
+    - helper: ReplaceHelper
+    - segmenter: Segmenter
+    - morph_vocab: MorphVocab
+    - emb: NewsEmbedding
+    - morph_tagger: NewsMorphTagger
+    - doc: Doc
+    + MorphologyController(text: str)
     + list[Word] word_objects_creation()
 }
 
@@ -63,7 +78,7 @@ class SaveController {
 
 class WordFormGenerationController {
     - word_form: str
-    - basis: str
+    - case: str
     - number: str
     + WordFormGenerationController(word_form: str, basis: str, number: str)
     + str word_form_generation()
@@ -74,7 +89,7 @@ class MainWindow {
 }
 
 class AboutProgramWindow {
-    
+
 }
 
 class WordFormGenerationWindow {
@@ -92,6 +107,7 @@ FormatController ---|> DOCController
 FormatController ---|> DOCXController
 
 MorphologyController ---> Word
+MorphologyController ---* ReplaceHelper
 
 SaveController ---> Word
 

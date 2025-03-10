@@ -1,7 +1,9 @@
 class Word:
-    def __init__(self, position_in_text: int, lexeme: str, basis: str, part_of_speech: str, ending: str, case: str,
+    def __init__(self, start_pos: int, stop_pos: int, word: str, lexeme: str, basis: str, part_of_speech: str, ending: str, case: str,
                  gender: str, number: str) -> None:
-        self.position_in_text: int = position_in_text
+        self.start_pos: int = start_pos
+        self.stop_pos: int = stop_pos
+        self.word: str = word
         self.lexeme: str = lexeme
         self.basis: str = basis
         self.part_of_speech: str = part_of_speech
