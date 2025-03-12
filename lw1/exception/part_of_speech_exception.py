@@ -3,4 +3,4 @@ class PartOfSpeechException(Exception):
         super().__init__(message)
 
     def __str__(self) -> str:
-        return 'Ошибка: Неизвестная часть речи'
+        return 'Ошибка: Неизвестная часть речи\n'

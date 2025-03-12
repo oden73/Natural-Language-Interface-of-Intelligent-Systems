@@ -42,6 +42,8 @@ class FileController {
 abstract class FormatController {
     - file_name: str
     + FormatController(file_name: str)
+    # bool is_file_valid()
+    # str clean_text(text: str)
     + str file_parse()
 }
 

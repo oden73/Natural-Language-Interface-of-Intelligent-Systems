@@ -2,6 +2,7 @@ from natasha import Doc, MorphVocab, NewsMorphTagger, Segmenter, NewsEmbedding
 
 from model.Word import Word
 from helper.replace_helper import ReplaceHelper
+from exception.part_of_speech_exception import PartOfSpeechException
 
 
 class MorphologyController:
