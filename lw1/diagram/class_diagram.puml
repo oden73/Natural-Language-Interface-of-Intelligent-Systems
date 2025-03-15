@@ -22,15 +22,25 @@ class ReplaceHelper {
     + gender_dict: dict
 }
 
+class ReverseReplaceHelper {
+    + case_dict: dict
+    + gender_dict: dict
+}
+
 class GeneralController {
+    - cur_word_list: list[Word]
     - main_window: MainWindow
     - file_controller: FileController
     - format_controller: FormatController
     - morphology_controller: MorphologyController
     - save_controller: SaveController
     - word_form_generation_controller: WordFormGenerationController
+    - editing_controller: EditingController
+    - search_controller: SearchController
+    - documentation_controller: DocumentationController
     + GeneralController()
     + list[Word] word_list_generation(text_file_name: str)
+    + save_file(save_file_path: str)
 }
 
 class FileController {
@@ -74,16 +84,44 @@ class MorphologyController {
 class SaveController {
     - save_path: str
     + SaveController(save_path: str)
-    - file form_file(list[Word])
-    + void save_file()
+    - str form_json(list[Word])
+    + void save_file(list[Word])
 }
 
 class WordFormGenerationController {
-    - word_form: str
+    - morph_analyzer: MorphAnalyzer
+    - helper: ReverseReplaceHelper
+    - lexeme: str
     - case: str
+    - gender: str
     - number: str
-    + WordFormGenerationController(word_form: str, basis: str, number: str)
+    + WordFormGenerationController(lexeme: str, case: str, gender: str, number: str)
     + str word_form_generation()
+}
+
+class EditingController {
+    - word: Word
+    - helper: ReverseReplaceHelper
+    - morph_analyzer: MorphAnalyzer
+    + EditingController(word: Word)
+    + Word edit_word(params: dict)
+}
+
+class SearchController {
+    + SearchController()
+    + list[Word] search(word_list: list[Word], params: dict)
+    + list[Word] filter(word_list: list[Word], params: dict)
+}
+
+class DocumentationController {
+    - documentation_file_save_path: str
+    + DocumentationController(documentation_file_save_path: str)
+    - str generate_documentation_text(word_list: list[Word])
+    + void documentation(word_list: list[Word])
+}
+
+class WindowIntegrationController {
+
 }
 
 class MainWindow {
@@ -98,12 +136,39 @@ class WordFormGenerationWindow {
 
 }
 
+class EditWordWindow {
+
+}
+
+class AddWordWindow {
+
+}
+
+class SearchWindow {
+
+}
+
+class SearchResultWindow {
+
+}
+
+class FilterWindow {
+
+}
+
+class FilterResultWindow {
+
+}
+
 GeneralController ---> Word
 GeneralController ---* FileController
 GeneralController ---* FormatController
 GeneralController ---* MorphologyController
 GeneralController ---* SaveController
 GeneralController ---* WordFormGenerationController
+GeneralController ---* EditingController
+GeneralController ---* SearchController
+GeneralController ---* DocumentationController
 
 FormatController ---|> DOCController
 FormatController ---|> DOCXController
@@ -114,5 +179,13 @@ MorphologyController ---* ReplaceHelper
 SaveController ---> Word
 
 WordFormGenerationController ---> Word
+WordFormGenerationController ---* ReverseReplaceHelper
+
+EditingController ---> Word
+EditingController ---* ReverseReplaceHelper
+
+SearchController ---> Word
+
+DocumentationController ---> Word
 
 @enduml
