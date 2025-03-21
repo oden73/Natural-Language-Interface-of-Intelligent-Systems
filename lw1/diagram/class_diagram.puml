@@ -29,7 +29,7 @@ class ReverseReplaceHelper {
 
 class GeneralController {
     - cur_word_list: list[Word]
-    - main_window: MainWindow
+    - window_integration_controller: WindowIntegrationController
     - file_controller: FileController
     - format_controller: FormatController
     - morphology_controller: MorphologyController
@@ -44,67 +44,55 @@ class GeneralController {
 }
 
 class FileController {
-    - file_name: str
-    + FileController(file_name: str)
-    + str file_format_definition()
+    + FileController()
+    + str file_format_definition(file_name: str)
 }
 
 abstract class FormatController {
-    - file_name: str
     + FormatController(file_name: str)
-    # bool is_file_valid()
+    # bool is_file_valid(file_name: str)
     # str clean_text(text: str)
-    + str file_parse()
+    + str file_parse(file_name: str)
 }
 
 class DOCController {
-    - file_name: str
-    + DOCController(file_name: str)
-    + str file_parse()
+    + DOCController()
+    + str file_parse(file_name: str)
 }
 
 class DOCXController {
-    - file_name: str
-    + DOCXController(file_name: str)
-    + str file_parse()
+    + DOCXController()
+    + str file_parse(file_name: str)
 }
 
 class MorphologyController {
-    - text: str
     - helper: ReplaceHelper
     - segmenter: Segmenter
     - morph_vocab: MorphVocab
     - emb: NewsEmbedding
     - morph_tagger: NewsMorphTagger
-    - doc: Doc
-    + MorphologyController(text: str)
-    + list[Word] word_objects_creation()
+    + MorphologyController()
+    + list[Word] word_objects_creation(text: str)
 }
 
 class SaveController {
-    - save_path: str
-    + SaveController(save_path: str)
-    - str form_json(list[Word])
-    + void save_file(list[Word])
+    + SaveController()
+    - str form_json(save_path: str, list[Word])
+    + void save_file(save_path: str, list[Word])
 }
 
 class WordFormGenerationController {
     - morph_analyzer: MorphAnalyzer
     - helper: ReverseReplaceHelper
-    - lexeme: str
-    - case: str
-    - gender: str
-    - number: str
-    + WordFormGenerationController(lexeme: str, case: str, gender: str, number: str)
-    + str word_form_generation()
+    + WordFormGenerationController()
+    + str word_form_generation(params: dict)
 }
 
 class EditingController {
-    - word: Word
     - helper: ReverseReplaceHelper
     - morph_analyzer: MorphAnalyzer
-    + EditingController(word: Word)
-    + Word edit_word(params: dict)
+    + EditingController()
+    + Word edit_word(word: Word, params: dict)
 }
 
 class SearchController {
@@ -114,10 +102,9 @@ class SearchController {
 }
 
 class DocumentationController {
-    - documentation_file_save_path: str
     + DocumentationController(documentation_file_save_path: str)
     - str generate_documentation_text(word_list: list[Word])
-    + void documentation(word_list: list[Word])
+    + void documentation(documentation_file_save_path: str, word_list: list[Word], full_document: bool)
 }
 
 class WindowIntegrationController {

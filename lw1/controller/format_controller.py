@@ -25,3 +25,6 @@ class FormatController:
     def file_parse(self, file_name: str) -> str:
         pass
 
+
+a = [1, 2, 3, 4]
+print(a[1:4])
