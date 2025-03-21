@@ -6,8 +6,7 @@ from exception.part_of_speech_exception import PartOfSpeechException
 
 
 class MorphologyController:
-    def __init__(self, text: str) -> None:
-        self.__text: str = text
+    def __init__(self) -> None:
         self.__helper: ReplaceHelper = ReplaceHelper()
 
         self.__segmenter: Segmenter = Segmenter()
@@ -15,17 +14,17 @@ class MorphologyController:
         self.__emb: NewsEmbedding = NewsEmbedding()
         self.__morph_tagger: NewsMorphTagger = NewsMorphTagger(self.__emb)
 
-        self.__doc = Doc(self.__text)
+    def word_objects_creation(self, text: str) -> list[Word]:
+        doc = Doc(text)
 
-    def word_objects_creation(self) -> list[Word]:
-        self.__doc.segment(self.__segmenter)
-        self.__doc.tag_morph(self.__morph_tagger)
-        for token in self.__doc.tokens:
+        doc.segment(self.__segmenter)
+        doc.tag_morph(self.__morph_tagger)
+        for token in doc.tokens:
             token.lemmatize(self.__morph_vocab)
 
         word_list: list[Word] = []
 
-        for token in self.__doc.tokens:
+        for token in doc.tokens:
             basis: str = ''
             ending: str = ''
 

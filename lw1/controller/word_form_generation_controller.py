@@ -4,22 +4,17 @@ from helper.reverse_replace_helper import ReverseReplaceHelper
 
 
 class WordFormGenerationController:
-    def __init__(self, lexeme: str, case: str, gender: str, number: str) -> None:
+    def __init__(self) -> None:
         self.__morph_analyzer: MorphAnalyzer = MorphAnalyzer()
         self.__helper: ReverseReplaceHelper = ReverseReplaceHelper()
 
-        self.__lexeme: str = lexeme
-        self.__case: str = self.__helper.case_dict[case]
-        self.__gender: str = self.__helper.gender_dict[gender]
-        self.__number: str = self.__helper.number_dict[number]
-
-    def word_form_generation(self) -> str:
-        parsed_lexeme = self.__morph_analyzer.parse(self.__lexeme)[0]
+    def word_form_generation(self, params: dict) -> str:
+        parsed_lexeme = self.__morph_analyzer.parse(params['Лексема'])[0]
 
         word_form = parsed_lexeme.inflect({
-            self.__case,
-            self.__gender,
-            self.__number
+            params['Падеж'],
+            params['Род'],
+            params['Число']
         })
 
-        return word_form.word if word_form else self.__lexeme
+        return word_form.word if word_form else params['Лексема']

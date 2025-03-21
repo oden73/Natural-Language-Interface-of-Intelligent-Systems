@@ -4,14 +4,14 @@ from controller.format_controller import FormatController
 
 
 class DOCXController(FormatController):
-    def __init__(self, file_name: str) -> None:
-        super().__init__(file_name)
+    def __init__(self) -> None:
+        super().__init__()
 
-    def file_parse(self) -> str:
-        if not super()._is_file_valid():
+    def file_parse(self, file_name: str) -> str:
+        if not super()._is_file_valid(file_name):
             return ""
 
-        doc: Document = Document(self._file_name)
+        doc: Document = Document(file_name)
 
         paragraphs = [par.text for par in doc.paragraphs]
         print(f'Найдено параграфов: {len(paragraphs)}')

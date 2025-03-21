@@ -4,10 +4,11 @@ from model.Word import Word
 
 
 class SaveController:
-    def __init__(self, save_path: str) -> None:
-        self.__save_path: str = save_path
+    def __init__(self) -> None:
+        pass
 
-    def __form_json(self, word_list: list[Word]) -> str:
+    @staticmethod
+    def __form_json(word_list: list[Word]) -> str:
         word_dict_list: list[dict] = []
 
         for word in word_list:
@@ -31,8 +32,8 @@ class SaveController:
         save_json: str = json.dumps(word_dict_list)
         return save_json
 
-    def save_file(self, word_list: list[Word]) -> None:
+    def save_file(self, save_path: str, word_list: list[Word]) -> None:
         save_json: str = self.__form_json(word_list)
 
-        with open(r'../configuration.json') as outfile:
+        with open(save_path) as outfile:
             outfile.write(save_json)

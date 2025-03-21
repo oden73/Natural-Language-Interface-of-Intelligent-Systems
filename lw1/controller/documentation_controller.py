@@ -2,10 +2,11 @@ from model.Word import Word
 
 
 class DocumentationController:
-    def __init__(self, documentation_file_save_path: str) -> None:
-        self.__documentation_file_save_path: str = documentation_file_save_path
+    def __init__(self) -> None:
+        pass
 
-    def __generate_documentation_text(self, word_list: list[Word]) -> str:
+    @staticmethod
+    def __generate_documentation_text(word_list: list[Word]) -> str:
         info_dict: dict = {
             'именительный': 0,
             'родительный': 0,
@@ -48,8 +49,8 @@ class DocumentationController:
 
         return documentation_text
 
-    def documentation(self, word_list: list[Word]) -> None:
+    def documentation(self, documentation_file_save_path, word_list: list[Word]) -> None:
         documentation_text: str = self.__generate_documentation_text(word_list)
 
-        with open(self.__documentation_file_save_path, 'w') as save_file:
+        with open(documentation_file_save_path, 'w') as save_file:
             save_file.write(documentation_text)
